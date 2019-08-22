@@ -118,7 +118,11 @@ _université_
 
 ### Prise en main
 
-#### Nouvelles technologies
+La première chose que j'ai eu à faire en arrivant à Manasoft a évidemment été de me familiariser avec l'environnement de développemnt. En effet celui-ci est assez complexe et comprenait un certain nombre de nouveautés pour moi. J'ai donc commencé par l'installation de l'environnement sur ma machine personelle, la lecture de documentations et la réalisation de tâches simples pour prendre en main le projet.
+
+#### Nouvelles technologies (pour moi)
+
+Parmis les technologies utilisées par l'entreprise, certaines m'étaient inconnues. Il s'agit en particulier de l'ensemble des services de développement cloud d'AWS. Et, bien que maitrisant globalement le language PHP et le principe des frameworks MVC, je n'avais que peu d'expérience sur le framework web principalement utilisé dans l'entreprise (Symphony 3). J'ai donc également dû m'y former.
 
 #### Lambda admin simples
 
