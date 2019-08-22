@@ -25,6 +25,8 @@ Hmiche Bilal
 
 ## Sommaire
 
+_auto généré dans le futur_
+
 ## Présentation de l'entreprise
 
 Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logiciels web de gestion à destination des entreprise. Il s'agit donc d'un modèle de type _B-to-B_. 3 logiciels sont actuelement développés:
@@ -33,6 +35,14 @@ Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logic
 - **Manacount** - logiciel à destination des comptables
 
 ## Travail effectué
+
+### Prise en main
+
+### Exports
+
+### Notifications en temps réel
+
+### Découpage en Microservices Symfony
 
 ## Conclusion
 
