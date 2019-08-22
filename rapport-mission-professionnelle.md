@@ -118,9 +118,31 @@ _université_
 
 ### Prise en main
 
+#### Nouvelles technologies
+
+#### Lambda admin simples
+
+#### Architecture du traitement des fichiers
+
+### Proposition d'intégration une bibliothèque logicielle
+
 ### Exports
 
+#### Reflexions
+
+#### Principe et implémentation
+
+#### Users
+
+#### Trackings
+
+#### Expenses
+
 ### Notifications en temps réel
+
+#### Recherche d'une solution technique
+
+### Recherche d'un logiciel de gestion d'erreurs
 
 ### Découpage en Microservices Symfony
 
