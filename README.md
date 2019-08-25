@@ -49,7 +49,7 @@ Trois logiciels sont actuellement développés:
 -   **Manacost** - logiciel de gestion des notes de frais
 -   **Manacount** - logiciel à destination des comptables
 
-Ces trois applications sont toutefois vouées à être fusionnées en une application unique composée de modules indépendants. Elle sont actuellement principalement développées en PHP[^php] et basées sur le framework web Symfony3 et utilisent toutes trois la même base de données MySql[^mysql]. Il s'agit donc d'applications *monolithiques*, c'est-à-dire composées d'un seul bloc de code comprenant l'ensemble des fonctionnalités de chaque application, ce bloc de code étant lancé sur un serveur unique. Contrairement à une architecture dite de *micro-service*, une architecture *monolithique* est difficile à *scaler*[^scaling]. Il existe en effet deux manières de *scaler* une application :
+Ces trois applications sont toutefois vouées à être fusionnées en une application unique composée de modules indépendants. Elle sont actuellement principalement développées en PHP[^php] et basées sur le framework web Symfony3[^symfony] et utilisent toutes trois la même base de données MySql[^mysql]. Il s'agit donc d'applications *monolithiques*, c'est-à-dire composées d'un seul bloc de code comprenant l'ensemble des fonctionnalités de chaque application, ce bloc de code étant lancé sur un serveur unique. Contrairement à une architecture dite de *micro-service*, une architecture *monolithique* est difficile à *scaler*[^scaling]. Il existe en effet deux manières de *scaler* une application :
 
 1.  **Verticalement** - ce qui consiste à augmenter **la puissance du serveur** faisant tourner l'application. Avec plus de puissance, plus d'opérations sont possibles dans un même laps de temps, ce qui permet effectivement d'augmenter le nombre de requêtes traitées. Ce mode de mise à l'échelle souffre néanmoins d'un inconvénient majeur : il est impossible de modifier la puissance d'une machine sans la redémarrer, ce qui ne permet par conséquent pas de gérer un pic de requêtes important.
 2.  **Horizontalement** - ce qui consiste à augmenter **le nombre de serveurs** faisant tourner l'application, permettant ainsi de traiter en parallèle plusieurs requêtes et donc d'en traiter plus dans un même laps de temps. Contrairement au *scaling* vertical, il est possible de lancer instantanément (à l'aide des nouvelles technologies cloud) de nouveau serveurs pour s'adapter en direct à un pic de requêtes. Il est également possible d'arrêter des serveurs lorsque ceux-ci ne sont plus nécessaire. Le *scaling* horizontal est donc plus flexible car il permet d'adapter la puissance au plus près de la demande et ainsi de réduire les coûts d'hébergement en "ne payant que ce dont on a besoin".
@@ -69,7 +69,7 @@ La première chose que j'ai eu à faire en arrivant à Manasoft a évidemment é
 
 #### 3.1.1. Nouvelles technologies (pour moi)
 
-Parmi les technologies utilisées par l'entreprise, certaines m'étaient inconnues. Il s'agit en particulier de l'ensemble des services de développement cloud d'AWS[^aws]. Et, bien que maîtrisant globalement bien le langage PHP et le principe des frameworks MVC[^mvc], je n'avais que peu d'expérience sur le framework web principalement utilisé dans l'entreprise (Symphony3). J'ai donc également dû m'y former.
+Parmi les technologies utilisées par l'entreprise, certaines m'étaient inconnues. Il s'agit en particulier de l'ensemble des services de développement cloud d'AWS[^aws]. Et, bien que maîtrisant globalement bien le langage PHP et le principe des frameworks MVC[^mvc], je n'avais que peu d'expérience sur le framework web principalement utilisé dans l'entreprise (Symphony3[^symfony]). J'ai donc également dû m'y former.
 
 #### 3.1.2. Lambda admin simples
 
@@ -132,13 +132,13 @@ deactivate AfterInsertLambda
 
 ### 3.2. Proposition d'intégration d'une bibliothèque logicielle
 
-Lors de la réalisation de ces *Lambda*, j'ai remarqué qu'un certain temps était perdu, lors du développement, à fabriquer des requêtes SQL[^sql] à la main en concaténant des chaînes de caractères. En effet, les données manipulées en OOP[^oop], comme c'est le cas avec les deux langages utilisés à Manasoft (Javascipt & PHP) se présentent sous la forme d'objets. Ceux-ci peuvent contenir d'autres objets et ce sur plusieurs niveaux. On a donc une représentation des données en arborescence. Or dans une base de données relationnelle telle que MySql[^mysql], les données ne sont pas stockées sous la forme d'objets mais sous la forme de tables, reliées entre elles les unes aux autres. Cela implique de faire des jointures entre plusieurs tables pour récupérer le contenu complet d'un objet.
+Lors de la réalisation de ces *Lambda*, j'ai remarqué qu'un certain temps était perdu, lors du développement, à fabriquer des requêtes SQL[^sql] à la main en concaténant des chaînes de caractères. En effet, les données manipulées en OOP[^oop], comme c'est le cas avec les deux langages utilisés à Manasoft (Javascript & PHP) se présentent sous la forme d'objets. Ceux-ci peuvent contenir d'autres objets et ce sur plusieurs niveaux. On a donc une représentation des données en arborescence. Or dans une base de données relationnelle telle que MySql[^mysql], les données ne sont pas stockées sous la forme d'objets mais sous la forme de tables, reliées entre elles les unes aux autres. Cela implique de faire des jointures entre plusieurs tables pour récupérer le contenu complet d'un objet.
 
-En PHP, pour simplifier la transition entre ces deux modes de représentation des données, un ORM[^orm] intégré au framework : Doctrine, est utilisé comme couche d'abstraction. Celui-ci nous permet de ne pas nous soucier de la complexité des requêtes SQL, et ainsi d'augmenter sensiblement la rapidité de développement d'une nouvelle fonctionnalité.
+En PHP, pour simplifier la transition entre ces deux modes de représentation des données, un ORM[^orm] intégré au framework : Doctrine[^doctrine], est utilisé comme couche d'abstraction. Celui-ci nous permet de ne pas nous soucier de la complexité des requêtes SQL, et ainsi d'augmenter sensiblement la rapidité de développement d'une nouvelle fonctionnalité.
 
 Dans le cas des *Lambda*, chacune d'entre elle est indépendante des autres, ce qui ne nous permet pas de mettre en commun un schéma de mappage objet-relations. Les requêtes SQL et la transformation des données brutes en objets doivent donc être réalisés à la main. Afin de ne plus avoir à faire autant d'opérations manuelles j'ai proposé l'introduction d'une bibliothèque logicielle : un _query builder_.
 
-Les autres membres de l'équipe web m'ont alors encouragé à rechercher et tester l'ensemble des solutions existantes. J'ai donc réalisé une courte présentation comparant les différentes solutions qui me sont apparues pertinentes. Et c'est après discussion avec le reste de l'équipe que l'une de ces solution a été retenue: Knex.js.
+Les autres membres de l'équipe web m'ont alors encouragé à rechercher et tester l'ensemble des solutions existantes. J'ai donc réalisé une courte présentation comparant les différentes solutions qui me sont apparues pertinentes. Et c'est après discussion avec le reste de l'équipe que l'une de ces solution a été retenue: Knex.js[^knex].
 
 ### 3.3. Exports
 
@@ -196,7 +196,7 @@ Après avoir décider de ne pas recréer un système complet à partir des outil
 
 #### 3.4.2. Implémentation
 
-La méthode retenue a donc été celle basée sur Getstream, un service cloud PAAS[^paas] permettant à la fois de gérer les la redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
+La méthode retenue a donc été celle basée sur Getstream[^getstream], un service cloud PAAS[^paas] permettant à la fois de gérer les la redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
 
 ```mermaid
 sequenceDiagram
@@ -262,7 +262,7 @@ Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manaso
 
 ### 3.5. Recherche d'un logiciel de gestion d'erreurs
 
-### 3.6. Découpage en Micro-services Symfony
+### 3.6. Découpage en Micro-services Symfony[^symfony]
 
 ## 4. Conclusion
 
@@ -270,9 +270,7 @@ Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manaso
 
 ## 5. Références
 
-### 5.1. Bibliographie
-
-### 5.2. Glossaire
+**Notes**
 
 [^b2b]: B2B : Business to Business.
 [^ml]: Machine learning : "apprentissage machine", forme d'intelligence artificielle basée sur le croisement d'un très grand nombre de données afin d'obtenir un résultat en les regroupant par catégories.
@@ -299,3 +297,7 @@ Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manaso
 [^url]: URL : Uniform Resource Locator, plus simplement un lien hypertexte.
 [^pubsub]: pub/sub : Publisher / Subscriber, mécanicisme de distribution de messages d'un publisher vers plusieurs subscribers.
 [^vpc]: VPC: Virtual Private Cloud, système de pare-feu du cloud d'AWS
+[^symfony]: Symfony : https://symfony.com/
+[^doctrine]: Doctrine : https://www.doctrine-project.org/
+[^knex]: Knex.js : http://knexjs.org/
+[^getstream]: Getstream : https://getstream.io/
