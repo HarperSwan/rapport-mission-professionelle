@@ -63,38 +63,6 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 <div style="page-break-after: always;"></div>
 ## 3. Travail effectué
 
-#### Semaine 45 (5 novembre)
-
--   Finitions du système de traitement des fichiers
--   Recherches et réflexions autour d'un système d'export optimisé
-    basé sur le concept d'event-driven programming depuis la base de données. Ce nouveau système permettra aux utilisateurs de conserver un historique de leurs exports tout en optimisant la rapidité de réponse.
--   Premiers essais d'implémentation du système d'export
-
-#### Semaine 48 (26 novembre)
-
--   Application du nouveau système d'export pour créer la page d'exports d'utilisateurs:
-    -   mise en place de l'infrastructure d'export
-    -   génération du fichier exporté
-    -   premier affichage de la liste des exports
-    -   ajout des premiers filtres d'exports
-
-#### Semaine 49 (3 décembre)
-
--   Poursuite du développement de la fonctionnalité d'export des utilisateurs:
-    -   amélioration de la liste des exports
-    -   ajout d'animations et de fonctionnalités d'interactions avec l'utilisateur
-    -   fonctionnement correct de l'ensemble de la fonctionnalité
-    -   factorisation d'une partie du code pour permettre la génération d'autres types d'exports
-    -   documentation de la fonctionnalité
--   Début du développement d'un autre export de données basé sur le même principe
-
-#### Semaine 52 (24 décembre)
-
--   Export d'utilisateurs:
-    -   amélioration du nombre et de la qualités des données exportées
-    -   ajout de plus de filtres et optimisations des filtres précédents
-    -   amélioration de l'ergonomie des pages d'exports
-
 ### 3.1. Prise en main
 
 La première chose que j'ai eu à faire en arrivant à Manasoft a évidemment été de me familiariser avec l'environnement de développement. En effet celui-ci est assez complexe et comprenait un certain nombre de nouveautés pour moi. J'ai donc commencé par l'installation de l'environnement sur ma machine personnelle, la lecture de documentations et la réalisation de tâches simples pour prendre en main le projet.
@@ -212,6 +180,8 @@ Front->>Front: Add download button
 ```
 
 Comme on peut le voir dans le schéma précédent, le principe d'_event-driven programming_ permet bien de réduire la charge de l'application Symfony, ce qui améliore le temps de réponse global de l'application pour afficher les pages.
+
+Une fois ce système réalisé pour l'export d'utilisateurs, il a été rendu générique afin de pouvoir fonctionner pour d'autres exports. Les exports de trackings et de notes de frais ont ainsi été réalisés relativement rapidement.
 
 ### 3.4. Notifications en temps réel
 
