@@ -1,32 +1,32 @@
 # Rapport de mission professionnelle
 
-## ![Couverture](./titre-couverture-logos.png)
+![Couverture](./titre-couverture-logos.png)
 
-### Année
+**Année**
 
 2018-2019
 
-### Étudiant
+**Étudiant**
 
 Peugnet Nicolas
 
-### Intitulé de la mission
+**Intitulé de la mission**
 
 Développeur Web PHP (Symfony3), Javascript (Node.js sur serverless)
 
-### Entreprise
+**Entreprise**
 
 Manasoft  
 42 rue Paul Claudel  
 91000 Évry
 
-### Responsable
+**Responsable**
 
 Hmiche Bilal
 
-### Tuteur Académique
+**Tuteur Académique**
 
-Dominique Béréziat
+Béréziat Dominique
 
 <div style="page-break-after: always;"></div>
 ## Sommaire
@@ -52,8 +52,9 @@ Trois logiciels sont actuellement développés:
 Ces trois applications sont toutefois vouées à être fusionnées en une application unique composée de modules indépendants. Elle sont actuellement principalement développées en PHP et basées sur le framework web Symfony3 et utilisent toutes trois la même base de données MySql. Il s'agit donc d'applications *monolithiques*, c'est-à-dire composées d'un seul bloc de code comprenant l'ensemble des fonctionnalités de chaque application, ce bloc de code étant lancé sur un serveur unique. Contrairement à une architecture dite de *micro-service*, une architecture *monolithique* est difficile à *scaler* ("mettre à l'échelle", soit, adapter la puissance de l'application au nombre de requêtes qu'elle reçoit). Il existe en effet deux manières de *scaler* une application :
 
 1.  **Verticalement** - ce qui consiste à augmenter **la puissance du serveur** faisant tourner l'application. Avec plus de puissance, plus d'opérations sont possibles dans un même laps de temps, ce qui permet effectivement d'augmenter le nombre de requêtes traitées. Ce mode de mise à l'échelle souffre néanmoins d'un inconvénient majeur : il est impossible de modifier la puissance d'une machine sans la redémarrer, ce qui ne permet par conséquent pas de gérer un pic de requêtes important.
-
 2.  **Horizontalement** - ce qui consiste à augmenter **le nombre de serveurs** faisant tourner l'application, permettant ainsi de traiter en parallèle plusieurs requêtes et donc d'en traiter plus dans un même laps de temps. Contrairement au *scaling* vertical, il est possible de lancer instantanément (à l'aide des nouvelles technologies cloud) de nouveau serveurs pour s'adapter en direct à un pic de requêtes. Il est également possible d'arrêter des serveurs lorsque ceux-ci ne sont plus nécessaire. Le *scaling* horizontal est donc plus flexible car il permet d'adapter la puissance au plus près de la demande et ainsi de réduire les coûts d'hébergement en "ne payant que ce dont on a besoin".
+
+![1566737115279](./vertical-horizontal.png)
 
 Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *scalables* et s'oriente donc vers un *scaling* de type horizontal. Pour cela le fournisseur de services cloud IAAS (Infrastructure As A Service) **AWS** (Amazon Web Services) a été choisi, notamment pour son service *serverless* **AWS Lambda** très efficace.
 
@@ -62,16 +63,8 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 <div style="page-break-after: always;"></div>
 ## 3. Travail effectué
 
-#### Semaine 40 (1 octobre)
-
--   Ajout d'une fonctionnalité de recherche d'utilisateurs utilisée par le logiciel d'administration
--   Ajout d'une fonctionnalité de modification d'entreprise
-
 #### Semaine 43 (22 octobre)
 
--   Optimisations et finitions de la fonctionnalité de modification d'entreprise
--   Optimisation de la fonction de recherche d'utilisateur pour réduire le temps de réponse
--   Ajout de filtres dans la recherche d'utilisateurs afin d'offrir la possibilité de faire des recherches plus fines
 -   Recherche et tests d'intégration d'un outil de développement pour les recherches sur la base de données
 
 #### Semaine 44 (29 octobre)
@@ -113,19 +106,37 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 
 ### 3.1. Prise en main
 
-La première chose que j'ai eu à faire en arrivant à Manasoft a évidemment été de me familiariser avec l'environnement de développement. En effet celui-ci est assez complexe et comprenait un certain nombre de nouveautés pour moi. J'ai donc commencé par l'installation de l'environnement sur ma machine personelle, la lecture de documentations et la réalisation de tâches simples pour prendre en main le projet.
+La première chose que j'ai eu à faire en arrivant à Manasoft a évidemment été de me familiariser avec l'environnement de développement. En effet celui-ci est assez complexe et comprenait un certain nombre de nouveautés pour moi. J'ai donc commencé par l'installation de l'environnement sur ma machine personnelle, la lecture de documentations et la réalisation de tâches simples pour prendre en main le projet.
 
 #### 3.1.1. Nouvelles technologies (pour moi)
 
-Parmi les technologies utilisées par l'entreprise, certaines m'étaient inconnues. Il s'agit en particulier de l'ensemble des services de développement cloud d'AWS. Et, bien que maîtrisant globalement le langage PHP et le principe des frameworks MVC, je n'avais que peu d'expérience sur le framework web principalement utilisé dans l'entreprise (Symphony 3). J'ai donc également dû m'y former.
+Parmi les technologies utilisées par l'entreprise, certaines m'étaient inconnues. Il s'agit en particulier de l'ensemble des services de développement cloud d'AWS. Et, bien que maîtrisant globalement bien le langage PHP et le principe des frameworks MVC, je n'avais que peu d'expérience sur le framework web principalement utilisé dans l'entreprise (Symphony 3). J'ai donc également dû m'y former.
 
 #### 3.1.2. Lambda admin simples
 
 Pour commencer en douceur, des tâches simples et sans trop de responsabilités m'ont, dans un premier temps, été attribuées. En effet, le logiciel étant déployé en production et déjà utilisé par plusieurs milliers de clients quotidiennement, directement modifier les fonctionnalités de l'application en tant que première mission peut s'avérer risqué. Par conséquent j'ai commencé par ajouter et modifier des fonctionnalités du logiciel de gestion de l'application, utilisé en interne par les commerciaux de l'entreprise. Cela avait pour avantage de ne pas impacter l'expérience utilisateur des clients.
 
-Ainsi ma toute première mission de développement fût de réaliser une fonction AWS Lambda permettant de rechercher des utilisateurs dans la base de données.
+Ainsi ma toute première mission de développement fût de réaliser une fonction *AWS Lambda* permettant de rechercher des utilisateurs dans la base de données. Celle-ci a immédiatement été suivie par une seconde lambda, cette fois de modification des données d'une entreprise.
 
 #### 3.1.3. Architecture du traitement des fichiers
+
+Une fois ces deux premières *Lambda* d'initiation terminées je passe à la modification de l'architecture du système de traitement de fichiers. Cette partie du code étant utilisée par l'application en production, elle est donc plus sensible, j'entre ainsi dans le cœur du sujet. Ce système est également géré par des *Lambda* car il s'agit d'un traitement lourd qu'il est préférable de gérer de manière asynchrone.
+
+```mermaid
+sequenceDiagram
+Front->>+Symfony: Uploads files
+Symfony->>+MySql: Inserts each file
+MySql-->>Symfony: Returns insert status
+MySql-x-Files Lambda: Triggers lambdas
+activate Files Lambda
+Symfony-->>-Front: Displays upload status page
+Files Lambda->>Files Lambda: Optimizes file
+Files Lambda->>+MySql: Updates file row
+MySql-->>-Files Lambda: Returns update status
+deactivate Files Lambda
+```
+
+
 
 ### 3.2. Proposition d'intégration une bibliothèque logicielle
 
@@ -134,6 +145,31 @@ Ainsi ma toute première mission de développement fût de réaliser une fonctio
 #### 3.3.1. Réflexions
 
 #### 3.3.2. Principe et implémentation
+
+```mermaid
+sequenceDiagram
+Front->>+Symfony: Launches export
+Symfony->>+MySql: Inserts export row
+MySql-->>Symfony: Returns insert status
+MySql-x-Export Lambda: Triggers lambda
+activate Export Lambda
+Symfony-->>-Front: Displays exports' list page
+Export Lambda->>Export Lambda: Generates export file
+Export Lambda-xS3: Uploads export file
+Export Lambda->>+MySql: Updates export row
+MySql-->>-Export Lambda: Return update status
+deactivate Export Lambda
+
+loop poll export file
+    Front->>S3: GET request on new export file
+    alt file is not yet uploaded
+    	S3-->>Front: Returns 404 file not found error
+    else file is uploaded
+    	S3-->>Front: Returns 200 file content
+    end
+end
+Front->>Front: Add download button
+```
 
 #### 3.3.3. Users
 
@@ -144,6 +180,31 @@ Ainsi ma toute première mission de développement fût de réaliser une fonctio
 ### 3.4. Notifications en temps réel
 
 #### 3.4.1. Recherche d'une solution technique
+
+#### 3.4.2. Implémentation
+
+```mermaid
+sequenceDiagram
+Front->>+Symfony: Adds absence
+Symfony->>+MySql: Inserts absence row
+MySql-->>Symfony: Returns insert status
+MySql-x-Lambda: Triggers Lambda
+activate Lambda
+Symfony-->>-Front: Displays abscences' list
+
+loop retry if fail
+    Lambda->>Getstream: Adds absence activity
+    alt succes
+        Getstream-->>Lambda: Returns 200
+    else fail
+        Getstream-->>Lambda: Returns error
+    end
+end
+deactivate Lambda
+
+Getstream-xFront: Sends websocket notification
+Front->>Front: Updates notifs' counter
+```
 
 ### 3.5. Recherche d'un logiciel de gestion d'erreurs
 
