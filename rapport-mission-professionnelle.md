@@ -63,10 +63,6 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 <div style="page-break-after: always;"></div>
 ## 3. Travail effectué
 
-#### Semaine 43 (22 octobre)
-
--   Recherche et tests d'intégration d'un outil de développement pour les recherches sur la base de données
-
 #### Semaine 44 (29 octobre)
 
 -   Dernières finitions de la fonction de modification d'entreprise
@@ -136,13 +132,29 @@ MySql-->>-Files Lambda: Returns update status
 deactivate Files Lambda
 ```
 
+Le système a été modifié afin de retirer un maximum de logique du trigger MySql. En effet, si un bug se manifeste dans ce trigger, l'ensemble du *cluster* d'écriture se retrouve en péril. De plus, le nombre de connexions parallèles en écriture à la base de données étant limité, il était devenu impératif de n'utiliser qu'une seule *Lambda* pour mettre à jour la base de données en une seule connexion et avec une requête unique. En effet le système de traitement des fichiers est composé de six *Lambda* effectuant chacune un traitement sur un fichier. Jusqu'alors chaque *Lambda* mettait à jour la base de données avec ses propres informations, ceci multipliant par six le nombre de connexions parallèles et le nombre de requêtes.
 
+Pour résoudre ces deux problèmes, une lambda a été ajoutée pour s'interfacer entre le trigger de la base de données et l'ensemble des *Lambda* d’optimisation.
 
-### 3.2. Proposition d'intégration une bibliothèque logicielle
+### 3.2. Proposition d'intégration d'une bibliothèque logicielle
+
+Lors de la réalisation de ces *Lambda*, j'ai remarqué qu'un certain temps était perdu, lors du développement, à fabriquer des requêtes SQL (Structured Query Language) à la main en concaténant des chaînes de caractères. En effet, les données manipulées en OOP (Object Oriented Programming), comme c'est le cas avec les deux languages utilisés à Manasoft (Javascipt & PHP) se présentent sous la forme d'objets. Ceux-ci peuvent contenir d'autres objets et ce sur plusieurs niveaux. On a donc une représentation des données en arborescence. Or dans une base de données relationnelle telle que MySql, les données ne sont pas stockées sous la forme d'objets mais sous la forme de tables, reliées entre elles les unes aux autres. Cela implique de faire des jointures entre plusieurs tables pour récupérer le contenu complet d'un objet.
+
+En PHP, pour simplifier la transition entre ces deux modes de représentation des données, un ORM (Object Relationnal Mapping) intégré au framework : Doctrine, est utilisé comme couche d'abstraction. Celui-ci nous permet de ne pas nous soucier de la complexité des requêtes SQL, et ainsi d'augmenter sensiblement la rapidité de développement d'une nouvelle fonctionnalité.
+
+Dans le cas des *Lambda*, chacune d'entre elle est indépendante des autres, ce qui ne nous permet pas de mettre en commun un schéma de mappage objet-relations. Les requêtes SQL et la transformation des données brutes en objets doivent donc être réalisés à la main. Afin de ne plus avoir à faire autant d'opérations manuelles j'ai proposé l'introduction d'une bibliothèque logicielle : un _query builder_.
+
+Les autres membres de l'équipe web m'ont alors encouragé à rechercher et tester l'ensemble des solutions existantes. J'ai donc réalisé une courte présentation comparant les différentes solutions qui me sont apparues pertinentes. Et c'est après discussion avec le reste de l'équipe que l'une de ces solution a été retenue: Knex.js.
 
 ### 3.3. Exports
 
+ une Ma tâche suivante a été de réaliser un système asynchrone d'export de données au format CSV (Coma Separated Values) et permettant également de sauvegarder l'historique des exports réalisés. De cette manière il est possible pour l'utilisateur de télécharger à nouveau un export réalisé par le passé. Ce système devait également permettre de sélectionner des filtres poussés lors de l'export.
+
 #### 3.3.1. Réflexions
+
+Après de multiples réflexions, schémas et discussions, le principe _d'event driven programming_ a été retenu pour réaliser cette fonctionnalité. Ce principe consiste à considérer l'insertion d'une ligne dans une table de la base de donnée comme un événement et de déclencher un traitement à partir de cet événement. 
+
+Nous avons également choisi de réaliser le traitement de manière asynchrone par une lambda
 
 #### 3.3.2. Principe et implémentation
 
@@ -179,12 +191,20 @@ Front->>Front: Add download button
 
 ### 3.4. Notifications en temps réel
 
+L'application étant codée en PHP et n'utilisant pas de framework front, il est compliqué d'y ajouter des fonctionnalités dynamiques. Pour des notifications en temps réel, il paraissait évident de tirer parti de l'efficacité des *WebSockets* dans ce domaine. AWS ayant récemment ajouté cette fonctionnalité à son *API* (Application Programming Interface) *Gateway* avait fourni un exemple d'implémentation de cette fonctionnalité via des *Lambda*. Nous avions donc deux possibilités :
+
+1.  Implémenter cette fonctionnalité en interne à l'aides outils d'AWS. Cela représentait tout de même une grosse charge de travail ainsi que l'utilisation de technologies nouvelles pour l'entreprise telles que *DynamoDB*.
+2.  Utiliser un service PAAS (Platform As A Service) externe 
+
 #### 3.4.1. Recherche d'une solution technique
+
+Après avoir décider de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de 3 outils permettant d'implémenter ce système, chacun à un niveau applicatif différent.
 
 #### 3.4.2. Implémentation
 
 ```mermaid
 sequenceDiagram
+note over Front, Symfony: Fonctionnement des notifs
 Front->>+Symfony: Adds absence
 Symfony->>+MySql: Inserts absence row
 MySql-->>Symfony: Returns insert status
@@ -204,6 +224,40 @@ deactivate Lambda
 
 Getstream-xFront: Sends websocket notification
 Front->>Front: Updates notifs' counter
+```
+
+```mermaid
+sequenceDiagram
+note over Symfony,MySql: MAJ des followers sur L'API
+activate Symfony
+Symfony->>+MySql: Updates organisation's schema
+MySql->>MySql: Insert update event in deduplication table
+MySql-->>Symfony: Returns update status
+deactivate Symfony
+MySql-x-SQS: Dedup. table posts event
+activate SQS
+loop follow relations remaining to update
+	SQS-xLambda: Triggers Lambda with redrive policy
+	deactivate SQS
+    activate Lambda
+    Lambda->>+MySql: Delete event row from dedup. table
+    MySql-->>-Lambda: Returns delete status
+    Lambda->>+MySql: Select shouldFollow
+    MySql-->>-Lambda: Returns results
+    Lambda->>+MySql: Select currentlyFollowing
+    MySql-->>-Lambda: Returns results
+    Lambda->>Lambda: Split into toFollow and toUnfollow
+    opt there are followers to update
+        Lambda->>Getstream: Bulk edit followers
+        Getstream-->>Lambda: Return status
+        Lambda->>+MySql: Update currentlyFollowing
+        MySql-->>-Lambda: Returns status
+        opt failure
+        	Lambda-xSQS: Repost event for logarithmic delayed retry
+        end
+    end
+    deactivate Lambda
+end
 ```
 
 ### 3.5. Recherche d'un logiciel de gestion d'erreurs
