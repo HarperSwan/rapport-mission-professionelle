@@ -29,17 +29,14 @@ Hmiche Bilal
 Béréziat Dominique
 
 <div style="page-break-after: always;"></div>
-
 ## Sommaire
 
 [TOC]
 
 <div style="page-break-after: always;"></div>
-
 ## 1. Résumé
 
 <div style="page-break-after: always;"></div>
-
 ## 2. Présentation de l'entreprise
 
 Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logiciels web de gestion à destination des entreprise. Il s'agit donc d'un modèle de type _B2B_[^b2b].
@@ -64,7 +61,6 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 *Serverless* est un paradigme de programmation dans lequel **chaque fonction** de l'application est lancée dans une micro-machine-virtuelle dédiée. Ces machines-virtuelles peuvent être démarrées en plusieurs exemplaires et arrêtées à la volée en quelques secondes, permettant ainsi un *scaling* horizontal indépendant pour **chaque fonction** de l'application.
 
 <div style="page-break-after: always;"></div>
-
 ## 3. Travail effectué
 
 #### Semaine 45 (5 novembre)
@@ -96,7 +92,7 @@ Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *sca
 
 -   Export d'utilisateurs:
     -   amélioration du nombre et de la qualités des données exportées
-    -   ajout de plus de filtres et optimisations des filtres précedents
+    -   ajout de plus de filtres et optimisations des filtres précédents
     -   amélioration de l'ergonomie des pages d'exports
 
 ### 3.1. Prise en main
@@ -184,9 +180,11 @@ Les autres membres de l'équipe web m'ont alors encouragé à rechercher et test
 
 Après de multiples réflexions, schémas et discussions, le principe _d'event-driven programming_ a été retenu pour réaliser cette fonctionnalité. Ce principe consiste à considérer l'insertion d'une ligne dans une table de la base de donnée comme un événement et de déclencher un traitement à partir de cet événement. 
 
-Nous avons également choisi de réaliser le traitement de manière asynchrone[^async] par une *Lambda*
+Nous avons également choisi de réaliser le traitement de manière asynchrone[^async] par une *Lambda*. Le système de fichier d'amazon S3 sera utilisé à la fois pour le stockage des fichiers et comme cible pour le polling[^polling] exécuté par le front[^front].
 
 #### 3.3.2. Principe et implémentation
+
+Cette fonctionnalité n'a, dans un premier temps, été réalisée que pour l'export des utilisateurs. Pour la réaliser, deux tables ont été ajoutés au schéma de données: `export_user` et `generic_file_generated`. La table `export_user` contenant les informations d'exports tels que les filtres et la date de création. La table `generic_file_generated` contenant quand à elle les informations propres au fichier généré comme par exemple son URL[^url] ou encore sont poids.
 
 ```mermaid
 sequenceDiagram
@@ -213,11 +211,7 @@ end
 Front->>Front: Add download button
 ```
 
-#### 3.3.3. Users
-
-#### 3.3.4. Trackings
-
-#### 3.3.5. Expenses
+Comme on peut le voir dans le schéma précédent, le principe d'_event-driven programming_ permet bien de réduire la charge de l'application Symfony, ce qui améliore le temps de réponse global de l'application pour afficher les pages.
 
 ### 3.4. Notifications en temps réel
 
@@ -231,6 +225,8 @@ L'application étant codée en PHP et n'utilisant pas de framework front, il est
 Après avoir décider de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de 3 outils permettant d'implémenter ce système, chacun à un niveau applicatif différent.
 
 #### 3.4.2. Implémentation
+
+La méthode retenue a donc été celle basée sur Getstream, un service cloud PAAS[^paas] permettant à la fois de gérer les la redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
 
 ```mermaid
 sequenceDiagram
@@ -255,6 +251,8 @@ deactivate Lambda
 Getstream-xFront: Sends websocket notification
 Front->>Front: Updates notifs' counter
 ```
+
+Le schéma précédent montre le fonctionnement de la création d'une notification lors de l'ajout d'une absence. Cependant pour que celui-ci fonctionne correctement il faut que les *subscribers* aient été définis afin qu'ils puissent recevoir une notification. Afin de ne pas avoir à créer une infinité de triggers[^trigger] mettant chacun à jour les _followers_ sur Getstream j'ai imaginé un système d'événement unique permettant de simplifier énormément le code de la mise à jour de *followers*. Une *Lambda* se charge de traiter cet événement en recherchant les relation qui devrait exister (`shouldFollow`) puis en les comparant avec celle existantes actuellement (`currentlyFollowing`) pour obtenir la liste des relation à ajouter (`toFollow`) et celle des relations à supprimer (`toUnfollow`). Afin de ne pas déclencher la *Lambda* d'update en parallèle pour un même événement lors d'une édition de masse, une table MySql[^mysql] de dé-duplication a été créée. Un trigger sur l'insertion dans la table de dé-duplication déclenche ensuite la séquence de mise à jour des _followers_ sur Getstream.
 
 ```mermaid
 sequenceDiagram
@@ -290,6 +288,8 @@ loop follow relations remaining to update
 end
 ```
 
+Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manasoft, plusieurs autres *Lambda* ont été nécessaire au bon fonctionnement du pipeline.
+
 ### 3.5. Recherche d'un logiciel de gestion d'erreurs
 
 ### 3.6. Découpage en Micro-services Symfony
@@ -324,4 +324,8 @@ end
 [^ws]: WebSockets : Protocole web de communication asynchrone en full duplex.
 [^api]: API : Application Programming Interface.
 [^paas]: PAAS : Platform As A Service.
-
+[^polling]: Polling : Fait de réaliser plusieurs requêtes à la suite à un serveur pour lui demander des nouveautés.
+[^front]: Front : Front-end, portion du code d'une application web affiché ou exécuté par le navigateur du client.
+[^url]: URL : Uniform Resource Locator, plus simplement un lien hypertexte.
+[^pubsub]: pub/sub : Publisher / Subscriber, mécanicisme de distribution de messages d'un publisher vers plusieurs subscribers.
+[^vpc]: VPC: Virtual Private Cloud, système de pare-feu du cloud d'AWS
