@@ -1,6 +1,6 @@
 # Rapport de mission professionnelle
 
-![Couverture](./titre-couverture-logos.png)
+![Couverture](./assets/titre-couverture-logos.png)
 
 **Année**
 
@@ -29,14 +29,17 @@ Hmiche Bilal
 Béréziat Dominique
 
 <div style="page-break-after: always;"></div>
+
 ## Sommaire
 
 [TOC]
 
 <div style="page-break-after: always;"></div>
+
 ## 1. Résumé
 
 <div style="page-break-after: always;"></div>
+
 ## 2. Présentation de l'entreprise
 
 Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logiciels web de gestion à destination des entreprise. Il s'agit donc d'un modèle de type _B-to-B_.
@@ -54,13 +57,14 @@ Ces trois applications sont toutefois vouées à être fusionnées en une applic
 1.  **Verticalement** - ce qui consiste à augmenter **la puissance du serveur** faisant tourner l'application. Avec plus de puissance, plus d'opérations sont possibles dans un même laps de temps, ce qui permet effectivement d'augmenter le nombre de requêtes traitées. Ce mode de mise à l'échelle souffre néanmoins d'un inconvénient majeur : il est impossible de modifier la puissance d'une machine sans la redémarrer, ce qui ne permet par conséquent pas de gérer un pic de requêtes important.
 2.  **Horizontalement** - ce qui consiste à augmenter **le nombre de serveurs** faisant tourner l'application, permettant ainsi de traiter en parallèle plusieurs requêtes et donc d'en traiter plus dans un même laps de temps. Contrairement au *scaling* vertical, il est possible de lancer instantanément (à l'aide des nouvelles technologies cloud) de nouveau serveurs pour s'adapter en direct à un pic de requêtes. Il est également possible d'arrêter des serveurs lorsque ceux-ci ne sont plus nécessaire. Le *scaling* horizontal est donc plus flexible car il permet d'adapter la puissance au plus près de la demande et ainsi de réduire les coûts d'hébergement en "ne payant que ce dont on a besoin".
 
-![1566737115279](./vertical-horizontal.png)
+![Illustration du scaling](./assets/vertical-horizontal.png)
 
 Vous l'aurez donc compris, Manasoft cherche à rendre ses applications plus *scalables* et s'oriente donc vers un *scaling* de type horizontal. Pour cela le fournisseur de services cloud IAAS (Infrastructure As A Service) **AWS** (Amazon Web Services) a été choisi, notamment pour son service *serverless* **AWS Lambda** très efficace.
 
 *Serverless* est un paradigme de programmation dans lequel **chaque fonction** de l'application est lancée dans une micro-machine-virtuelle dédiée. Ces machines-virtuelles peuvent être démarrées en plusieurs exemplaires et arrêtées à la volée en quelques secondes, permettant ainsi un *scaling* horizontal indépendant pour **chaque fonction** de l'application.
 
 <div style="page-break-after: always;"></div>
+
 ## 3. Travail effectué
 
 #### Semaine 44 (29 octobre)
