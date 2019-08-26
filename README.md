@@ -187,6 +187,8 @@ Front->>Front: Add download button
 
 Comme on peut le voir dans le schéma précédent, le principe d'_event-driven programming_ permet bien de réduire la charge de l'application Symfony, ce qui améliore le temps de réponse global de l'application pour afficher les pages.
 
+![Capture d’écran de 2019-08-26 09-41-24](./assets/export-utilisateur.png)
+
 Une fois ce système réalisé pour l'export d'utilisateurs, il a été rendu générique afin de pouvoir fonctionner pour d'autres exports. Les exports de trackings et de notes de frais ont ainsi été réalisés relativement rapidement.
 
 ### 3.4. Notifications en temps réel
@@ -265,6 +267,10 @@ end
 ```
 
 Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manasoft, plusieurs autres *Lambda* ont été nécessaire au bon fonctionnement du pipeline.
+
+Pour l'instant ce système n'est utilisé que pour afficher le nombre de notification mais il est déjà capable de supporter un panneau de notifiations vues et lues.
+
+![Capture d’écran de 2019-05-23 16-09-13](./assets/notifications.png)
 
 ### 3.5. Intégration continue et qualité de code
 
