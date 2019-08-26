@@ -36,7 +36,7 @@ Béréziat Dominique
 <div style="page-break-after: always;"></div>
 ## 1. Résumé
 
-Mon objectif principal au cours de cette mission professionnelle était d'approfondir mes connaissance en développement  web. J'ai choisi Manasoft premièrement en raison des langages de programmation utilisés: PHP[^php] et Javascript, les deux langages que j'avais le plus utilisés jusqu'alors. De cette manière j'étais sûr de ne pas être ralenti par les subtilités d'un nouveau langage, ce qui me permettrait de pouvoir me concentrer sur l'apprentissage de technologies plus poussées.
+Mon objectif principal au cours de cette mission professionnelle était d'approfondir mes connaissance en développement web. J'ai choisi Manasoft premièrement en raison des langages de programmation utilisés : PHP[^php] et Javascript, les deux langages que j'avais le plus utilisés jusqu'alors. De cette manière, j'étais sûr de ne pas être ralenti par les subtilités d'un nouveau langage, ce qui me permettrait de pouvoir me concentrer sur l'apprentissage de technologies plus poussées.
 
 J'avais envie de me lancer dans la découverte en détail d'un framework web complet tel que Symfony[^symfony], car je n'avais jusqu'à maintenant qu’eu l'occasion d'utiliser des micro-frameworks PHP comme par exemple W[^w], découvert lors de mon dernier stage de BTS.
 
@@ -45,20 +45,20 @@ De la même manière, j'étais suffisamment à l'aise avec Javascript et Node.js
 <div style="page-break-after: always;"></div>
 ## 2. Présentation de l'entreprise
 
-Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logiciels web de gestion à destination des entreprise. Il s'agit donc d'un modèle de type _B2B_[^b2b].
+Manasoft est une entreprise d'une quinzaine de salariés. Elle produit des logiciels web de gestion à destination des entreprises. Il s'agit donc d'un modèle de type _B2B_[^b2b].
 
-Parmi les deux équipes de développeurs existante, j'intégrais l'équipe de développement web. Celle-ci étant chargée de développer de nouvelles fonctionnalités aux applications. L'autre équipe de développeurs s'occupe quand à elle des fonctionnalités basées sur le *machine-learning*[^ml], comme par exemple l'OCR[^ocr] pour l'ajout automatique d'une note de frais à partir d'une image ou encore la détection d'un arrêt d'utilisation de l'application par un client.
+Parmi les deux équipes de développeurs existantes, j'intégrai l'équipe de développement web. Celle-ci étant chargée de développer de nouvelles fonctionnalités aux applications. L'autre équipe de développeurs s'occupe quand à elle des fonctionnalités basées sur le *machine-learning*[^ml], comme par exemple l'OCR[^ocr] pour l'ajout automatique d'une note de frais à partir d'une image ou encore la détection d'un arrêt d'utilisation de l'application par un client.
 
-Trois logiciels sont actuellement développés:
+Trois logiciels sont actuellement développés :
 
--   **Manatime** - logiciel de gestion RH[^rh] (congés payés, absences, time-tracking, etc...)
+-   **Manatime** - logiciel de gestion RH[^rh] (congés payés, absences, time-tracking, etc.)
 -   **Manacost** - logiciel de gestion des notes de frais
 -   **Manacount** - logiciel à destination des comptables
 
-Ces trois applications sont toutefois vouées à être fusionnées en une application unique composée de modules indépendants. Elle sont actuellement principalement développées en PHP[^php] et basées sur le framework web Symfony3[^symfony] et utilisent toutes trois la même base de données MySql[^mysql]. Il s'agit donc d'applications *monolithiques*, c'est-à-dire composées d'un seul bloc de code comprenant l'ensemble des fonctionnalités de chaque application, ce bloc de code étant lancé sur un serveur unique. Contrairement à une architecture dite de *micro-service*, une architecture *monolithique* est difficile à *scaler*[^scaling]. Il existe en effet deux manières de *scaler* une application :
+Ces trois applications sont toutefois vouées à être fusionnées en une application unique composée de modules indépendants. Elles sont actuellement principalement développées en PHP[^php] et basées sur le framework web Symfony3[^symfony] et utilisent toutes trois la même base de données MySql[^mysql]. Il s'agit donc d'applications *monolithiques*, c'est-à-dire composées d'un seul bloc de code comprenant l'ensemble des fonctionnalités de chaque application, ce bloc de code étant lancé sur un serveur unique. Contrairement à une architecture dite de *micro-service*, une architecture *monolithique* est difficile à *scaler*[^scaling]. Il existe en effet deux manières de *scaler* une application :
 
 1.  **Verticalement** - ce qui consiste à augmenter **la puissance du serveur** faisant tourner l'application. Avec plus de puissance, plus d'opérations sont possibles dans un même laps de temps, ce qui permet effectivement d'augmenter le nombre de requêtes traitées. Ce mode de mise à l'échelle souffre néanmoins d'un inconvénient majeur : il est impossible de modifier la puissance d'une machine sans la redémarrer, ce qui ne permet par conséquent pas de gérer un pic de requêtes important.
-2.  **Horizontalement** - ce qui consiste à augmenter **le nombre de serveurs** faisant tourner l'application, permettant ainsi de traiter en parallèle plusieurs requêtes et donc d'en traiter plus dans un même laps de temps. Contrairement au *scaling* vertical, il est possible de lancer instantanément (à l'aide des nouvelles technologies cloud) de nouveau serveurs pour s'adapter en direct à un pic de requêtes. Il est également possible d'arrêter des serveurs lorsque ceux-ci ne sont plus nécessaire. Le *scaling* horizontal est donc plus flexible car il permet d'adapter la puissance au plus près de la demande et ainsi de réduire les coûts d'hébergement en "ne payant que ce dont on a besoin".
+2.  **Horizontalement** - ce qui consiste à augmenter **le nombre de serveurs** faisant tourner l'application, permettant ainsi de traiter en parallèle plusieurs requêtes et donc d'en traiter plus dans un même laps de temps. Contrairement au *scaling* vertical, il est possible de lancer instantanément (à l'aide des nouvelles technologies cloud) de nouveau serveurs pour s'adapter en direct à un pic de requêtes. Il est également possible d'arrêter des serveurs lorsque ceux-ci ne sont plus nécessaires. Le *scaling* horizontal est donc plus flexible car il permet d'adapter la puissance au plus près de la demande et ainsi de réduire les coûts d'hébergement en "ne payant que ce dont on a besoin".
 
 ![Illustration du scaling](./assets/vertical-horizontal.png)
 
@@ -81,11 +81,11 @@ Parmi les technologies utilisées par l'entreprise, certaines m'étaient inconnu
 
 Pour commencer en douceur, des tâches simples et sans trop de responsabilités m'ont, dans un premier temps, été attribuées. En effet, le logiciel étant déployé en production et déjà utilisé par plusieurs milliers de clients quotidiennement, directement modifier les fonctionnalités de l'application en tant que première mission peut s'avérer risqué. Par conséquent j'ai commencé par ajouter et modifier des fonctionnalités du logiciel de gestion de l'application, utilisé en interne par les commerciaux de l'entreprise. Cela avait pour avantage de ne pas impacter l'expérience utilisateur des clients.
 
-Ainsi ma toute première mission de développement fût de réaliser une fonction *AWS[^aws] Lambda* permettant de rechercher des utilisateurs dans la base de données. Celle-ci a immédiatement été suivie par une seconde *Lambda*, cette fois de modification des données d'une entreprise.
+Ainsi ma toute première mission de développement fut de réaliser une fonction *AWS[^aws] Lambda* permettant de rechercher des utilisateurs dans la base de données. Celle-ci a immédiatement été suivie par une seconde *Lambda*, cette fois de modification des données d'une entreprise.
 
 #### 3.1.3. Architecture du traitement des fichiers
 
-Une fois ces deux premières *Lambda* d'initiation terminées je passe à la modification de l'architecture du système de traitement de fichiers. Cette partie du code étant utilisée par l'application en production, elle est donc plus sensible, j'entre ainsi dans le cœur du sujet. Ce système est également géré par des *Lambda* car il s'agit d'un traitement lourd qu'il est préférable de gérer de manière asynchrone.
+Une fois ces deux premières *Lambda* d'initiation terminées, je passe à la modification de l'architecture du système de traitement de fichiers. Cette partie du code étant utilisée par l'application en production, elle est donc plus sensible, j'entre ainsi dans le cœur du sujet. Ce système est également géré par des *Lambda* car il s'agit d'un traitement lourd qu'il est préférable de gérer de manière asynchrone.
 
 ```mermaid
 sequenceDiagram
@@ -101,7 +101,7 @@ MySql-->>-Files Lambda: Returns update status
 deactivate Files Lambda
 ```
 
-Le système a été modifié afin de retirer un maximum de logique du trigger[^trigger] MySql[^mysql]. En effet, si un bug se manifeste dans ce trigger[^trigger], l'ensemble du *cluster*[^cluster] d'écriture se retrouve en péril. De plus, le nombre de connexions parallèles en écriture à la base de données étant limité, il était devenu impératif de n'utiliser qu'une seule *Lambda* pour mettre à jour la base de données en une seule connexion et avec une requête unique. En effet le système de traitement des fichiers est composé de six *Lambda* effectuant chacune un traitement sur un fichier. Jusqu'alors chaque *Lambda* mettait à jour la base de données avec ses propres informations, ceci multipliant par six le nombre de connexions parallèles et le nombre de requêtes.
+Le système a été modifié afin de retirer un maximum de logique du trigger[^trigger] MySql[^mysql]. En effet, si un bug se manifeste dans ce trigger[^trigger], l'ensemble du *cluster*[^cluster] d'écriture se retrouve en péril. De plus, le nombre de connexions parallèles en écriture à la base de données étant limité, il était devenu impératif de n'utiliser qu'une seule *Lambda* pour mettre à jour la base de données en une seule connexion et avec une requête unique. En effet, le système de traitement des fichiers est composé de six *Lambda* effectuant chacune un traitement sur un fichier. Jusqu'alors chaque *Lambda* mettait à jour la base de données avec ses propres informations, ceci multipliant par six le nombre de connexions parallèles et le nombre de requêtes.
 
 Pour résoudre ces deux problèmes, une lambda a été ajoutée pour s'interfacer entre le trigger[^trigger] de la base de données et l'ensemble des *Lambda* d’optimisation. Donnant ainsi l'architecture suivante (en omettant certaines *Lambda* d'optimisation) :
 
@@ -142,13 +142,13 @@ Lors de la réalisation de ces *Lambda*, j'ai remarqué qu'un certain temps éta
 
 En PHP, pour simplifier la transition entre ces deux modes de représentation des données, un ORM[^orm] intégré au framework : Doctrine[^doctrine], est utilisé comme couche d'abstraction. Celui-ci nous permet de ne pas nous soucier de la complexité des requêtes SQL, et ainsi d'augmenter sensiblement la rapidité de développement d'une nouvelle fonctionnalité.
 
-Dans le cas des *Lambda*, chacune d'entre elle est indépendante des autres, ce qui ne nous permet pas de mettre en commun un schéma de mappage objet-relations. Les requêtes SQL et la transformation des données brutes en objets doivent donc être réalisés à la main. Afin de ne plus avoir à faire autant d'opérations manuelles j'ai proposé l'introduction d'une bibliothèque logicielle : un _query builder_.
+Dans le cas des *Lambda*, chacune d'entre elle est indépendante des autres, ce qui ne nous permet pas de mettre en commun un schéma de mappage objet-relations. Les requêtes SQL et la transformation des données brutes en objets doivent donc être réalisées à la main. Afin de ne plus avoir à faire autant d'opérations manuelles j'ai proposé l'introduction d'une bibliothèque logicielle : un _query builder_.
 
 Les autres membres de l'équipe web m'ont alors encouragé à rechercher et tester l'ensemble des solutions existantes. J'ai donc réalisé une courte présentation comparant les différentes solutions qui me sont apparues pertinentes. Et c'est après discussion avec le reste de l'équipe que l'une de ces solution a été retenue: Knex.js[^knex].
 
 ### 3.3. Exports
 
- une Ma tâche suivante a été de réaliser un système asynchrone d'export de données au format CSV[^csv] et permettant également de sauvegarder l'historique des exports réalisés. De cette manière il est possible pour l'utilisateur de télécharger à nouveau un export réalisé par le passé. Ce système devait également permettre de sélectionner des filtres poussés lors de l'export.
+ une Ma tâche suivante a été de réaliser un système asynchrone d'export de données au format CSV[^csv] et permettant également de sauvegarder l'historique des exports réalisés. De cette manière, il est possible pour l'utilisateur de télécharger à nouveau un export réalisé par le passé. Ce système devait également permettre de sélectionner des filtres poussés lors de l'export.
 
 #### 3.3.1. Réflexions
 
@@ -158,7 +158,7 @@ Nous avons également choisi de réaliser le traitement de manière asynchrone[^
 
 #### 3.3.2. Principe et implémentation
 
-Cette fonctionnalité n'a, dans un premier temps, été réalisée que pour l'export des utilisateurs. Pour la réaliser, deux tables ont été ajoutés au schéma de données: `export_user` et `generic_file_generated`. La table `export_user` contenant les informations d'exports tels que les filtres et la date de création. La table `generic_file_generated` contenant quand à elle les informations propres au fichier généré comme par exemple son URL[^url] ou encore sont poids.
+Cette fonctionnalité n'a, dans un premier temps, été réalisée que pour l'export des utilisateurs. Pour la réaliser, deux tables ont été ajoutées au schéma de données: `export_user` et `generic_file_generated`. La table `export_user` contenant les informations d'exports tels que les filtres et la date de création. La table `generic_file_generated` contenant quant à elle les informations propres au fichier généré comme par exemple son URL[^url] ou encore son poids.
 
 ```mermaid
 sequenceDiagram
@@ -195,16 +195,16 @@ Une fois ce système réalisé pour l'export d'utilisateurs, il a été rendu g�
 
 L'application étant codée en PHP et n'utilisant pas de framework front, il est compliqué d'y ajouter des fonctionnalités dynamiques. Pour des notifications en temps réel, il paraissait évident de tirer parti de l'efficacité des *WebSockets*[^ws] dans ce domaine. AWS[^aws] ayant récemment ajouté cette fonctionnalité à son *API*[^api] *Gateway* et fourni un exemple d'implémentation de cette fonctionnalité via des *Lambda*. Nous avions donc deux possibilités :
 
-1.  Implémenter cette fonctionnalité en interne à l'aides outils d'AWS. Cela représentait tout de même une grosse charge de travail ainsi que l'utilisation de technologies nouvelles pour l'entreprise telles que *DynamoDB* ou *Redis*.
-2.  Utiliser un service PAAS[^paas] externe 
+1.  Implémenter cette fonctionnalité en interne à l'aide des outils d'AWS. Cela représentait tout de même une grosse charge de travail ainsi que l'utilisation de technologies nouvelles pour l'entreprise telles que *DynamoDB* ou *Redis*.
+2.  Utiliser un service PAAS[^paas] externe. 
 
 #### 3.4.1. Recherche d'une solution technique
 
-Après avoir décider de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de deux outils externe permettant d'implémenter ce système : Getstream[^getstream] et Pusher[^pusher].
+Après avoir décidé de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de deux outils externe permettant d'implémenter ce système : Getstream[^getstream] et Pusher[^pusher].
 
 #### 3.4.2. Implémentation
 
-La méthode retenue a donc été celle basée sur Getstream[^getstream], un service cloud PAAS[^paas] permettant à la fois de gérer les redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
+La méthode retenue a donc été celle basée sur Getstream[^getstream], un service cloud PAAS[^paas] permettant à la fois de gérer les redirectiosn pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vues/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
 
 ```mermaid
 sequenceDiagram
@@ -230,7 +230,7 @@ Getstream-xFront: Sends websocket notification
 Front->>Front: Updates notifs' counter
 ```
 
-Le schéma précédent montre le fonctionnement de la création d'une notification lors de l'ajout d'une absence. Cependant pour que celui-ci fonctionne correctement il faut que les *subscribers* aient été définis afin qu'ils puissent recevoir une notification. Afin de ne pas avoir à créer une infinité de triggers[^trigger] mettant chacun à jour les _followers_ sur Getstream j'ai imaginé un système d'événement unique permettant de simplifier énormément le code de la mise à jour de *followers*. Une *Lambda* se charge de traiter cet événement en recherchant les relation qui devrait exister (`shouldFollow`) puis en les comparant avec celle existantes actuellement (`currentlyFollowing`) pour obtenir la liste des relation à ajouter (`toFollow`) et celle des relations à supprimer (`toUnfollow`). Afin de ne pas déclencher la *Lambda* d'update en parallèle pour un même événement lors d'une édition de masse, une table MySql[^mysql] de dé-duplication a été créée. Un trigger sur l'insertion dans la table de dé-duplication déclenche ensuite la séquence de mise à jour des _followers_ sur Getstream.
+Le schéma précédent montre le fonctionnement de la création d'une notification lors de l'ajout d'une absence. Cependant pour que celui-ci fonctionne correctement il faut que les *subscribers* aient été définis afin qu'ils puissent recevoir une notification. Afin de ne pas avoir à créer une infinité de triggers[^trigger] mettant chacun à jour les _followers_ sur Getstream, j'ai imaginé un système d'événement unique permettant de simplifier énormément le code de la mise à jour de *followers*. Une *Lambda* se charge de traiter cet événement en recherchant les relations qui devraient exister (`shouldFollow`) puis en les comparant avec celles existantes actuellement (`currentlyFollowing`) pour obtenir la liste des relations à ajouter (`toFollow`) et celle des relations à supprimer (`toUnfollow`). Afin de ne pas déclencher la *Lambda* d'update en parallèle pour un même événement lors d'une édition de masse, une table MySql[^mysql] de dé-duplication a été créée. Un trigger sur l'insertion dans la table de dé-duplication déclenche ensuite la séquence de mise à jour des _followers_ sur Getstream.
 
 ```mermaid
 sequenceDiagram
@@ -266,15 +266,15 @@ loop follow relations remaining to update
 end
 ```
 
-Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manasoft, plusieurs autres *Lambda* ont été nécessaire au bon fonctionnement du pipeline.
+Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manasoft, plusieurs autres *Lambda* ont été nécessaires au bon fonctionnement du pipeline.
 
-Pour l'instant ce système n'est utilisé que pour afficher le nombre de notification mais il est déjà capable de supporter un panneau de notifiations vues et lues.
+Pour l'instant ce système n'est utilisé que pour afficher le nombre de notifications mais il est déjà capable de supporter un panneau de notifiations vues et lues.
 
 ![Capture d’écran de 2019-05-23 16-09-13](./assets/notifications.png)
 
 ### 3.5. Intégration continue et qualité de code
 
-Pour simplifier les *reviews* des *pull requests*[^pr] j'ai du mettre en place une intégration continue faisant des tests automatisés.
+Pour simplifier les *reviews* des *pull requests*[^pr] j'ai dû mettre en place une intégration continue faisant des tests automatisés.
 
 ![jsbuild](./assets/jsbuild.png) ![phpbuild](./assets/phpbuild.png)
 
@@ -282,7 +282,7 @@ Pour simplifier les *reviews* des *pull requests*[^pr] j'ai du mettre en place u
 
 ### 3.6. Découpage en Micro-services Symfony[^symfony]
 
-Afin de diminuer la complexité du projet global, il a été décidé de fusionner les trois applications en une tout en les découpant en modules, les plus indépendants possible les uns des autres. De cette manière il est plus simple pour une personne de ne s'occuper que du développement d'un module, car le code correspondant n'est pas noyé dans le reste du code de l'application.
+Afin de diminuer la complexité du projet global, il a été décidé de fusionner les trois applications en une tout en les découpant en modules, les plus indépendants (indépendamment (?)) possible les uns des autres. De cette manière, il est plus simple pour une personne de ne s'occuper que du développement d'un module, car le code correspondant n'est pas noyé dans le reste du code de l'application.
 
 Pour préparer cette transition importante, deux choses étaient absolument nécessaires à mettre en place :
 
@@ -291,7 +291,7 @@ Pour préparer cette transition importante, deux choses étaient absolument néc
 
 #### 3.6.1. Recherche d'un logiciel de gestion d'erreurs
 
-L'ancien système de gestion étant basé sur un envoi de mail groupé, un système d'attribution des erreurs devait être mis en place afin que les développeurs ne soit pas submergés par les erreurs affluent de chaque module.
+L'ancien système de gestion étant basé sur un envoi de mail groupé, un système d'attribution des erreurs devait être mis en place afin que les développeurs ne soient pas submergés par les erreurs affluents de chaque module.
 
 #### 3.6.2. Le core-bundle
 
