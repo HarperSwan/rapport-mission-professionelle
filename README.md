@@ -36,6 +36,12 @@ Béréziat Dominique
 <div style="page-break-after: always;"></div>
 ## 1. Résumé
 
+Mon objectif principal au cours de cette mission professionnelle était d'approfondir mes connaissance en développement  web. J'ai choisi Manasoft premièrement en raison des langages de programmation utilisés: PHP[^php] et Javascript, les deux langages que j'avais le plus utilisés jusqu'alors. De cette manière j'étais sûr de ne pas être ralenti par les subtilités d'un nouveau langage, ce qui me permettrait de pouvoir me concentrer sur l'apprentissage de technologies plus poussées.
+
+J'avais envie de me lancer dans la découverte en détail d'un framework web complet tel que Symfony[^symfony], car je n'avais jusqu'à maintenant qu’eu l'occasion d'utiliser des micro-frameworks PHP comme par exemple W[^w], découvert lors de mon dernier stage de BTS.
+
+De la même manière, j'étais suffisamment à l'aise avec Javascript et Node.js pour être prêt à appréhender de nouvelles technologies telles que *serverless* et le reste des services d'AWS[^aws].
+
 <div style="page-break-after: always;"></div>
 ## 2. Présentation de l'entreprise
 
@@ -192,11 +198,11 @@ L'application étant codée en PHP et n'utilisant pas de framework front, il est
 
 #### 3.4.1. Recherche d'une solution technique
 
-Après avoir décider de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de 3 outils permettant d'implémenter ce système, chacun à un niveau applicatif différent.
+Après avoir décider de ne pas recréer un système complet à partir des outils d'AWS à cause d'une charge de travail trop élevée, il restait encore à choisir quel service externe mettre en place. J'ai réalisé un tableau comparatif de deux outils externe permettant d'implémenter ce système : Getstream[^getstream] et Pusher[^pusher].
 
 #### 3.4.2. Implémentation
 
-La méthode retenue a donc été celle basée sur Getstream[^getstream], un service cloud PAAS[^paas] permettant à la fois de gérer les la redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
+La méthode retenue a donc été celle basée sur Getstream[^getstream], un service cloud PAAS[^paas] permettant à la fois de gérer les redirection pub/sub[^pubsub] des différents flux (appelés *stream*) vers leurs subscribers (appelés *followers*), le stockage des notifications (appelées _activity_), la gestion des notifications vue/lues et l'envoi de notifications au front[^front] via les WebSockets[^ws].
 
 ```mermaid
 sequenceDiagram
@@ -260,9 +266,28 @@ end
 
 Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manasoft, plusieurs autres *Lambda* ont été nécessaire au bon fonctionnement du pipeline.
 
-### 3.5. Recherche d'un logiciel de gestion d'erreurs
+### 3.5. Intégration continue et qualité de code
+
+Pour simplifier les *reviews* des *pull requests*[^pr] j'ai du mettre en place une intégration continue faisant des tests automatisés.
+
+![jsbuild](./assets/jsbuild.png) ![phpbuild](./assets/phpbuild.png)
+
+![cheks-github](./assets/cheks-github.png)
 
 ### 3.6. Découpage en Micro-services Symfony[^symfony]
+
+Afin de diminuer la complexité du projet global, il a été décidé de fusionner les trois applications en une tout en les découpant en modules, les plus indépendants possible les uns des autres. De cette manière il est plus simple pour une personne de ne s'occuper que du développement d'un module, car le code correspondant n'est pas noyé dans le reste du code de l'application.
+
+Pour préparer cette transition importante, deux choses étaient absolument nécessaires à mettre en place :
+
+1.  Un logiciel de gestion d'erreur permettant d'attribuer les erreurs aux développeurs concernés.
+2.  Une base de code partagée qui servirait de SDK[^sdk].
+
+#### 3.6.1. Recherche d'un logiciel de gestion d'erreurs
+
+L'ancien système de gestion étant basé sur un envoi de mail groupé, un système d'attribution des erreurs devait être mis en place afin que les développeurs ne soit pas submergés par les erreurs affluent de chaque module.
+
+#### 3.6.2. Le core-bundle
 
 ## 4. Conclusion
 
@@ -296,8 +321,12 @@ Ce schéma a été simplifiée car à cause du VPC[^vpc] mis en place par Manaso
 [^front]: Front : Front-end, portion du code d'une application web affiché ou exécuté par le navigateur du client.
 [^url]: URL : Uniform Resource Locator, plus simplement un lien hypertexte.
 [^pubsub]: pub/sub : Publisher / Subscriber, mécanicisme de distribution de messages d'un publisher vers plusieurs subscribers.
-[^vpc]: VPC: Virtual Private Cloud, système de pare-feu du cloud d'AWS
+[^vpc]: VPC: Virtual Private Cloud, système de pare-feu du cloud d'AWS.
 [^symfony]: Symfony : https://symfony.com/
 [^doctrine]: Doctrine : https://www.doctrine-project.org/
 [^knex]: Knex.js : http://knexjs.org/
 [^getstream]: Getstream : https://getstream.io/
+[^pusher]: Pusher : https://pusher.com/
+[^w]: W : https://github.com/axessweb/W
+[^sdk]: SDK : Software Development Kit, un ensemble d'outils logiciels facilitant le développement d'un logiciel sur une plateforme donnée.
+[^pr]: Pull request : Mécanisme permettant de proposer une modification de code source, celle-ci sera la plupart du temps *reviewée* par au moins une personne avant d'être intégrée.
